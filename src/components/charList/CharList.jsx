@@ -46,7 +46,10 @@ class CharList extends Component {
         ) : error ? (
           <ErrorMessage />
         ) : (
-          <View charList={charList} />
+          <View
+            charList={charList}
+            onCharSelected={this.props.onCharSelected}
+          />
         )}
 
         <button className="button button__main button__long">
@@ -57,7 +60,7 @@ class CharList extends Component {
   }
 }
 
-const View = ({ charList }) => {
+const View = ({ charList, onCharSelected }) => {
   const noImage =
     "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
 
@@ -67,7 +70,11 @@ const View = ({ charList }) => {
         const isHasImg = char.thumbnail === noImage;
 
         return (
-          <li className="char__item" key={char.id}>
+          <li
+            className="char__item"
+            key={char.id}
+            onClick={() => onCharSelected(char.id)}
+          >
             <img
               src={char.thumbnail}
               alt={char.name}
