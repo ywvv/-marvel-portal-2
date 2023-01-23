@@ -1,0 +1,10 @@
+@import "../../style/variables";
+
+.not-found {
+  text-align: center;
+  font-weight: bold;
+  font-size: 24px;
+  a:hover {
+    color: $main-color;
+  }
+}
