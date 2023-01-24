@@ -1,7 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 
 import AppHeader from "../appHeader/AppHeader";
-import { MainPage, ComicsPage, Page404, SingleComicPage } from "../../pages";
+import { MainPage, ComicsPage, Page404, SinglePage } from "../../pages";
+import SingleCharacterLayout from "../../pages/singleCharacterLayout/SingleCharacterLayout";
+import SingleComicLayout from "../../pages/singleComicLayout/SingleComicLayout";
 
 const App = () => {
   return (
@@ -11,7 +13,22 @@ const App = () => {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="comics" element={<ComicsPage />} />
-          <Route path="comics/:comicId" element={<SingleComicPage />} />
+          <Route
+            exact
+            path="comics/:id"
+            element={
+              <SinglePage Component={SingleComicLayout} dataType="comic" />
+            }
+          />
+          <Route
+            path="characters/:id"
+            element={
+              <SinglePage
+                Component={SingleCharacterLayout}
+                dataType="character"
+              />
+            }
+          />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </main>
