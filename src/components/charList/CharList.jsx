@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import PropTypes from "prop-types";
 
 import Spinner from "../spinner/Spinner";
@@ -51,32 +52,38 @@ const CharList = ({ onCharSelected }) => {
       const isHasImg = item.thumbnail === noImage;
 
       return (
-        <li
-          className="char__item"
-          tabIndex={0}
-          ref={(el) => (itemRefs.current[i] = el)}
-          key={item.id}
-          onClick={() => {
-            onCharSelected(item.id);
-            focusOnItem(i);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === " " || e.key === "Enter") {
+        <CSSTransition key={item.id} timeout={500} classNames="char__item">
+          <li
+            className="char__item"
+            tabIndex={0}
+            ref={(el) => (itemRefs.current[i] = el)}
+            key={item.id}
+            onClick={() => {
               onCharSelected(item.id);
               focusOnItem(i);
-            }
-          }}
-        >
-          <img
-            src={item.thumbnail}
-            alt={item.name}
-            style={isHasImg ? { objectFit: "fill" } : null}
-          />
-          <div className="char__name">{item.name}</div>
-        </li>
+            }}
+            onKeyDown={(e) => {
+              if (e.key === " " || e.key === "Enter") {
+                onCharSelected(item.id);
+                focusOnItem(i);
+              }
+            }}
+          >
+            <img
+              src={item.thumbnail}
+              alt={item.name}
+              style={isHasImg ? { objectFit: "fill" } : null}
+            />
+            <div className="char__name">{item.name}</div>
+          </li>
+        </CSSTransition>
       );
     });
-    return <ul className="char__grid">{items}</ul>;
+    return (
+      <ul className="char__grid">
+        <TransitionGroup component={null}>{items}</TransitionGroup>
+      </ul>
+    );
   };
 
   const items = renderItems(charList);
